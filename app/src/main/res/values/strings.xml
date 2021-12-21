@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Cheers</string>
+    <string name="status">API Call resulted in %s</string>
 </resources>

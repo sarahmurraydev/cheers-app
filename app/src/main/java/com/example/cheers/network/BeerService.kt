@@ -16,11 +16,14 @@ private val retrofit = Retrofit.Builder()
         .baseUrl("https://api.openbrewerydb.org/")
         .build()
 
-val service: BeerService = retrofit.create(BeerService::class.java)
-
 interface BeerService {
-
     @GET("breweries")
     suspend fun getBreweries(@Query("by_city") city: String) : List<Brewery>
+}
 
+// do this so the object is only made once
+object BeerServiceApi {
+    val service: BeerService by lazy {
+        retrofit.create(BeerService::class.java)
+    }
 }
