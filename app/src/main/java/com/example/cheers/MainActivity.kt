@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.example.cheers.databinding.ActivityMainBinding
+import com.example.cheers.network.Brewery
 import com.example.cheers.network.service
 import kotlinx.coroutines.async
-import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var response: String
+    private lateinit var response: List<Brewery>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +28,13 @@ class MainActivity : AppCompatActivity() {
     private suspend fun getData() {
         val deferredResponse = lifecycleScope.async { service.getBreweries("new_york") }
         response = deferredResponse.await()
-        Log.d("ACTIVITY", response)
-//        response.forEach {
-//            Log.d("ACTIVITY", "======================================")
-//            Log.d("ACTIVITY", it.toString())
-//            Log.d("ACTIVITY", "======================================")
-//        }
-        binding.mainText.text = response
+        // Log.d("ACTIVITY", response)
+        response.forEach {
+            Log.d("ACTIVITY", "======================================")
+            Log.d("ACTIVITY", it.toString())
+            Log.d("ACTIVITY", "======================================")
+        }
+        val firstBrewery = response.first()
+        binding.mainText.text = firstBrewery.name
     }
 }

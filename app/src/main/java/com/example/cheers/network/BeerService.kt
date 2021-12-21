@@ -1,13 +1,18 @@
 package com.example.cheers.network
 
-import org.json.JSONObject
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+private val moshi = Moshi.Builder()
+    .add(KotlinJsonAdapterFactory())
+    .build()
+
 private val retrofit = Retrofit.Builder()
-        .addConverterFactory(ScalarsConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
         .baseUrl("https://api.openbrewerydb.org/")
         .build()
 
@@ -16,6 +21,6 @@ val service: BeerService = retrofit.create(BeerService::class.java)
 interface BeerService {
 
     @GET("breweries")
-    suspend fun getBreweries(@Query("by_city") city: String) : String
+    suspend fun getBreweries(@Query("by_city") city: String) : List<Brewery>
 
 }
