@@ -2,11 +2,12 @@ package com.example.cheers.network
 
 import org.json.JSONObject
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 private val retrofit = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create())
         .baseUrl("https://api.openbrewerydb.org/")
         .build()
 
