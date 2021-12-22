@@ -15,6 +15,7 @@ class CheersViewModel: ViewModel() {
 
     public val breweries: LiveData<List<Brewery>> = _breweries
     public val apiStatus: LiveData<String> = _apiStatus
+    public val adapter = BreweryAdapter()
 
     init {
         getBreweriesByCity("philadelphia")
@@ -25,6 +26,7 @@ class CheersViewModel: ViewModel() {
             try {
                 _apiStatus.value = "SUCCESS"
                 _breweries.value = BeerServiceApi.service.getBreweries(city)
+                adapter.submitList(breweries.value)
             } catch (e: Exception) {
                 _apiStatus.value = "FAILURE"
             }

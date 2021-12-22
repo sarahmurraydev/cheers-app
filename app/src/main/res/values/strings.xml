@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Cheers</string>
     <string name="status">API Call resulted in %s</string>
+    <string name="city_state_zip">%s, %s %s</string>
 </resources>
